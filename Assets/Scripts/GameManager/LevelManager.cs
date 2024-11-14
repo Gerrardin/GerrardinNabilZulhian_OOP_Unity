@@ -2,40 +2,29 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Singleton
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private Animator animator;
+    [SerializeField] Animator animator;
 
-    private void Awake()
+    void Awake()
     {
-        // Ensure animator is assigned, or find it in the scene
-        if (animator == null)
-        {
-            animator = GameObject.Find("SceneTransition")?.GetComponent<Animator>();
-            if (animator == null)
-            {
-                Debug.LogWarning("Animator not assigned or not found on SceneTransition object.");
-            }
-        }
+        animator.enabled = false;
     }
 
-    public IEnumerator LoadSceneAsync(string sceneName)
+    IEnumerator LoadSceneAsync(string sceneName)
     {
-        // Start transition animation
-        animator.SetTrigger("StartTransition");
+        animator.enabled = true;
 
-        // Wait for animation to complete
-        yield return new WaitForSeconds(0); // Adjust if animation length differs
+        // animator.SetTrigger("startTransition");
 
-        // Load the scene asynchronously
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
+        yield return new WaitForSeconds(1);
 
-        // End transition animation
-        animator.SetTrigger("EndTransition");
+        SceneManager.LoadSceneAsync(sceneName);
+
+        animator.SetTrigger("endTransition");
+
+        Player.Instance.transform.position = new(0, -4.5f);
     }
 
     public void LoadScene(string sceneName)
@@ -43,4 +32,3 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 }
-
