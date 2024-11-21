@@ -2,23 +2,31 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static Player Instance;
-    private PlayerMovement playerMovement;
-    private Animator animator;
+    // This for getting the instace of Player Singleton
+    public static Player Instance { get; private set; }
 
-    private void Awake()
+    // Getting the PlayerMovement methods
+    PlayerMovement playerMovement;
+    // Animator
+    Animator animator;
+
+
+    // Key for Singleton
+    void Awake()
     {
-        if (Instance == null)
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
+            Destroy(this);
+            return;
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+
+        Instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
+    // Getting Component
+    void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
 
@@ -34,7 +42,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    // Using FixedUpdate to Move because of physics
+    void FixedUpdate()
     {
         playerMovement.Move();
     }
@@ -45,5 +54,16 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("IsMoving", playerMovement.IsMoving());
         }
+    }
+
+    private WeaponPickup currentWeaponPickup;
+
+    public void SwitchWeapon(Weapon newWeapon, WeaponPickup newWeaponPickup)
+    {
+        if (currentWeaponPickup != null)
+        {
+            currentWeaponPickup.PickupHandler(true);  // Make the previous weapon pickup visible again
+        }
+        currentWeaponPickup = newWeaponPickup;
     }
 }

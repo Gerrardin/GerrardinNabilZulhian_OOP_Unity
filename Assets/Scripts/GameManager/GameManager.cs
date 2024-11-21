@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton instance
     public static GameManager Instance { get; private set; }
-    
-    // Reference to LevelManager
     public LevelManager LevelManager { get; private set; }
 
-    private void Awake()
-    {
-        // Implement singleton pattern
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
 
-            // Find LevelManager in the scene or create one if it doesn't exist
-            LevelManager = FindObjectOfType<LevelManager>();
-            if (LevelManager == null)
+
+    void Awake()
+    {
+        foreach (Transform child in transform)
+        {
+            if (child.GetComponent<Canvas>() != null || child.GetComponent<UnityEngine.UI.Image>() != null)
             {
-                GameObject levelManagerObject = new GameObject("LevelManager");
-                LevelManager = levelManagerObject.AddComponent<LevelManager>();
+                child.gameObject.SetActive(false);
             }
         }
-        else
+        if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+
+        LevelManager = GetComponentInChildren<LevelManager>();
+
+        DontDestroyOnLoad(gameObject);
+        var camera = GameObject.Find("Camera");
+        if (camera != null)
+        {
+            DontDestroyOnLoad(camera);
         }
     }
-}
 
+
+}

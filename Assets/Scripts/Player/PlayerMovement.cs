@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
         moveFriction = -2 * maxSpeed / (timeToFullSpeed * timeToFullSpeed);
         stopFriction = -2 * maxSpeed / (timeToStop * timeToStop);
 
-        // Menentukan batas pergerakan dari kamera
         Camera cam = Camera.main;
         minBounds = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane));
         maxBounds = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane));
