@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootIntervalInSeconds: 0.1
-  bullet: {fileID: 67845272685809383}
+  bullet: {fileID: 1741574294639547291, guid: f0a7ecf363c96b148a70d4dac31de765, type: 3}
   bulletSpawnPoint: {fileID: 8348876597710952526}
   parentTransform: {fileID: 0}
 --- !u!1001 &90922958599998307
@@ -244,17 +244,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0a7ecf363c96b148a70d4dac31de765, type: 3}
---- !u!114 &67845272685809383 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1741574294639547291, guid: f0a7ecf363c96b148a70d4dac31de765, type: 3}
-  m_PrefabInstance: {fileID: 1790841097871793532}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142d274706a92374fb2b6c682733cc00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &7422147166147216494 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9212847479394998546, guid: f0a7ecf363c96b148a70d4dac31de765, type: 3}

@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTargeting : MonoBehaviour
+public class EnemyTargeting : Enemy
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform Player;
+    public float speed = 5f;
+    private Vector2 spawn;
+    void RandomizeSpawnPoint()
     {
-        
+        base.Start();
+
+        float spawnx = Random.Range(-9, 9);
+        float spawny = Random.Range(-6, 6);
+
+        transform.position = new Vector2(spawnx, spawny);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void Start()
     {
-        
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+        RandomizeSpawnPoint();
+    }
+    private void Update()
+    {
+        if (Player != null)
+        {
+            Vector2 direction = (Player.position - transform.position).normalized;
+            rb.velocity = direction * speed;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
